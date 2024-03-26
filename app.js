@@ -1,7 +1,7 @@
 const express = require('express')
 const app = express()
 const cors = require('cors')
-const port = 3000
+const port = process.env.PORT || 3000; // Usar el puerto proporcionado por Render o el puerto 3000 si no está definido
 
 //// Clases
 // User
@@ -45,6 +45,11 @@ app.get('/users', (req, res) => {
   })
   res.status(200).json(users)
 })
+
+// Manejador de ruta para la ruta raíz ('/')
+app.get('/', (req, res) => {
+  res.send('Welcome to User Management App'); // Envía un mensaje de bienvenida cuando se accede a la raíz
+});
 
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`)
