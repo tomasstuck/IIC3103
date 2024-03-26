@@ -27,7 +27,7 @@
             const username = document.getElementById('username').value;
             const avatar = document.getElementById('avatar').value;
 
-            fetch('http://localhost:3000/users', {
+            fetch('/users', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -42,7 +42,7 @@
 
         // Creamos la funcion para obtener los usuarios
         function getUsers() {
-            fetch('http://localhost:3000/users')
+            fetch('/users')
             .then(response => response.json())
             .then(data => {
                 const userList = document.getElementById('userList');
