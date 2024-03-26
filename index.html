@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Management</title>
+</head>
+<body>
+    <h1>User Management</h1>
+
+    <h2>Add User</h2>
+    <label for="username">Username:</label>
+    <input type="text" id="username">
+    <label for="avatar">Avatar URL:</label>
+    <input type="text" id="avatar">
+    <button onclick="addUser()">Add User</button>
+
+    <h2>Users</h2>
+    <ul id="userList"></ul>
+
+    <!-- Creamos la logica para hacer GET users con un boton -->
+    <button onclick="getUsers()">Get Users</button>
+
+    <script>
+        // Creamos la funcion para agregar un usuario
+        function addUser() {
+            const username = document.getElementById('username').value;
+            const avatar = document.getElementById('avatar').value;
+
+            fetch('http://localhost:3000/users', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username, avatar })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+            });
+        }
+
+        // Creamos la funcion para obtener los usuarios
+        function getUsers() {
+            fetch('http://localhost:3000/users')
+            .then(response => response.json())
+            .then(data => {
+                const userList = document.getElementById('userList');
+                userList.innerHTML = '';
+                data.forEach(user => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `
+                        <img src="${user.avatar}" alt="${user.username}" width="100">
+                        <span>${user.username}</span>
+                    `;
+                    userList.appendChild(li);
+                });
+            });
+        }
+    </script>
+
+</body>
+</html>
