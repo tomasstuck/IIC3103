@@ -1,6 +1,7 @@
-const express = require('express')
-const app = express()
-const cors = require('cors')
+const express = require('express');
+const app = express();
+const cors = require('cors');
+const path = require('path'); // Módulo para manejar rutas de archivos
 const port = process.env.PORT || 3000; // Usar el puerto proporcionado por Render o el puerto 3000 si no está definido
 
 //// Clases
@@ -46,9 +47,12 @@ app.get('/users', (req, res) => {
   res.status(200).json(users)
 })
 
+// Servir archivos estáticos (como tu index.html)
+app.use(express.static(path.join(__dirname, 'public')));
+
 // Manejador de ruta para la ruta raíz ('/')
 app.get('/', (req, res) => {
-  res.send('Welcome to User Management App'); // Envía un mensaje de bienvenida cuando se accede a la raíz
+  res.sendFile(path.join(__dirname, 'public', 'index.html')); // Envía el archivo index.html
 });
 
 app.listen(port, () => {
